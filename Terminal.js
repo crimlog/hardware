@@ -3,14 +3,24 @@ const { terminal: term } = require('terminal-kit');
 class Spinner {
 	static #spinner = null;
 
-	static async show() {
-		this.#spinner = await term.spinner('dotSpinner');
-		term(' Tap your card 💳 ');
+	/**
+	 * @param {object} args Destructured arguments
+	 * @param {string} [args.text] Text to be displayed after spinner, on same line
+	 * @param {Terminal.AnimatedTextOption} [args.type] Spinner type
+	 */
+	static async show({ text = ' Loading... ', type = 'dotSpinner' } = {}) {
+		this.#spinner = await term.spinner(type);
+		term(text);
 	}
 
-	static stop() {
+	/**
+	 *
+	 * @param {object} args Destructured arguments
+	 * @param {boolean} [args.clear] Whether to clear the terminal after stopping the spinner
+	 */
+	static stop({ clear = true } = {}) {
 		this.#spinner.animate(false);
-		term.clear();
+		clear ? term.clear() : term('\n\n');
 	}
 }
 
@@ -20,21 +30,29 @@ module.exports = class Terminal {
 		return this;
 	}
 
-	static showSpinner() {
-		/*await*/ Spinner.show();
+	static showTapSpinner() {
+		/*await*/ Spinner.show({ text: ' Tap your card 💳 ' });
 		return this;
 	}
 
-	static hideSpinner() {
-		Spinner.stop();
+	static showProcessingSpinner() {
+		/*await*/ Spinner.show({ type: 'lineSpinner', text: ' Processing... ' });
 		return this;
 	}
 
-	static sendResultTable(card_id) {
+	static hideSpinner(opts = {}) {
+		Spinner.stop(opts);
+		return this;
+	}
+
+	/**
+	 * Display in the terminal a table with the student's information
+	 */
+	static sendStudentTable({ id, cardId, first, last }) {
 		term.table(
 			[
 				[' 💳 Card ID', ' 👤 Student Name', ' 🎓 Student ID'],
-				[` ${card_id}`, ' Melanie Spence', ' 12345678'],
+				[` ${cardId}`, ` ${first} ${last}`, ` ${id}`],
 			],
 			{
 				hasBorder: true,
@@ -47,5 +65,6 @@ module.exports = class Terminal {
 			}
 		);
 		term('\n');
+		return this;
 	}
 };
