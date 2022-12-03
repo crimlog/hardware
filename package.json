@@ -1,0 +1,13 @@
+{
+	"name": "crimlog-hardware",
+	"version": "0.0.1",
+	"private": true,
+	"main": "app.js",
+	"dependencies": {
+		"rpi-mfrc522-nodejs": "1.0.1",
+		"terminal-kit": "3.0.0"
+	},
+	"engines": {
+		"node": ">=18.12.0"
+	}
+}
