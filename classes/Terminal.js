@@ -51,8 +51,8 @@ module.exports = class Terminal {
 	static sendStudentTable({ id, cardId, first, last }) {
 		term.table(
 			[
-				[' 💳 Card ID', ' 👤 Student Name', ' 🎓 Student ID'],
-				[` ${cardId}`, ` ${first} ${last}`, ` ${id}`],
+				[' 👤 Student Name', ' 🎓 Student ID', ' 💳 Card ID'],
+				[` ${first} ${last}`, ` ${id}`, ` ${cardId}`],
 			],
 			{
 				hasBorder: true,
