@@ -3,8 +3,13 @@
 	"version": "0.0.1",
 	"private": true,
 	"main": "app.js",
+	"scripts": {
+		"start": "sudo node app.js"
+	},
 	"dependencies": {
+		"moment": "2.29.4",
 		"rpi-mfrc522-nodejs": "1.0.1",
+		"serialize-error": "8.1.0",
 		"terminal-kit": "3.0.0"
 	},
 	"engines": {
