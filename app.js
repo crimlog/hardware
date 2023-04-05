@@ -1,6 +1,4 @@
 const reader = require('rpi-mfrc522-nodejs');
-const Logger = require('./classes/Logger');
-// const Terminal = require('./classes/Terminal');
 const { request, gql } = require('graphql-request');
 
 const READER_PINS = [[2, 22]]; // GPIO pins
@@ -101,7 +99,6 @@ const handleRead = async function (data) {
 	// throttle taps to prevent spam
 	if (currently_reading) return;
 	currently_reading = true;
-	// Terminal.hideSpinner({ clear: false }).showProcessingSpinner();
 
 	try {
 		console.log('received input', card_id);
@@ -121,20 +118,13 @@ const handleRead = async function (data) {
 	} catch (e) {
 		throw e;
 	} finally {
-		// remove loading spinner, show result table
-		// Terminal.hideSpinner().sendStudentTable(studentId).showTapSpinner();
 		currently_reading = false;
 	}
 };
-
-// initialize the terminal and show loading spinner
-// Terminal.init().showTapSpinner();
 
 // listen to new card reads
 reader.onRfidChange(READER_PINS, handleRead);
 
 process.on('unhandledRejection', (err) => {
-	// since this is a console app, no console.log
-	//Logger.error(err);
 	console.error(err);
 });
